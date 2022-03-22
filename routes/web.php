@@ -15,3 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PostController::class, 'index']);
+Route::get('/add-post', [PostController::class, 'create']);
+Route::post('/store', [PostController::class, 'store'])->name('store');
