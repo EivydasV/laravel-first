@@ -14,6 +14,7 @@
             {{$post->created_at}}
         </p>
     </div>
+    <img src="{{ asset('storage'.$post->image) }}" class="img-thumbnail"/>
     <!-- Divider-->
     <hr class="my-4" />
 

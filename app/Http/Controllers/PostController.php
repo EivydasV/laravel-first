@@ -38,9 +38,19 @@ class PostController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|unique:posts|max:255',
-            'content' => 'required'
+            'content' => 'required',
+            'image' => 'sometimes|image'
         ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('public/images');
+            $fileName = str_replace('public', '', $path);
+            $validated = array_merge($validated, ['image' => $fileName]);
+        }
+
+
         Post::create($validated);
+
         return redirect('/');
     }
 
