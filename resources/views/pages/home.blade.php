@@ -16,6 +16,8 @@
     </div>
     <!-- Divider-->
     <hr class="my-4" />
+
+</div>
 @endforeach
    
       
