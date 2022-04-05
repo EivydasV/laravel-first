@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -60,9 +62,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        return view('pages.show-post', compact('post'));
     }
 
     /**
@@ -71,9 +73,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('pages.edit-post', compact('post'));
     }
 
     /**
@@ -83,9 +85,19 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+
+        if ($request->hasFile('image')) {
+
+            File::delete(storage_path('app/public' . $post->image));
+            $path = $request->file('image')->store('public/images');
+            $fileName = str_replace('public', '', $path);
+            $post->update(['image' => $fileName]);
+        }
+        $post->update($request->only(['title', 'content']));
+
+        return redirect()->back();
     }
 
     /**
@@ -94,8 +106,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect('/');
     }
 }
