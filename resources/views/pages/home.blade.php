@@ -19,6 +19,9 @@
 
 </div>
 @endforeach
-{{ $posts->links() }}
+<div class="container d-flex justify-content-center mt-2">
+
+    {{ $posts->links() }}
+</div>
       
 @endsection
