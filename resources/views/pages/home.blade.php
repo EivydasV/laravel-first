@@ -4,7 +4,7 @@
 <div class="col-md-10 col-lg-8 col-xl-7">
     <!-- Post preview-->
     <div class="post-preview">
-        <a href="post.html">
+        <a href="/post/{{$post->id}}">
             <h2 class="post-title">{{$post->title}}</h2>
             <h3 class="post-subtitle">{{$post->content}}</h3>
         </a>
@@ -14,7 +14,9 @@
             {{$post->created_at}}
         </p>
     </div>
-    <img src="{{ asset('storage'.$post->image) }}" class="img-thumbnail"/>
+    @if ($post->image)
+        <img src="{{ asset('storage'.$post->image) }}" class="img-thumbnail"/>
+    @endif
     <!-- Divider-->
     <hr class="my-4" />
 
