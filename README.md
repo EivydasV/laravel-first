@@ -10,7 +10,7 @@
 ## Lunch Laravel
 
 -   `ddev start`
-    if error is `Could not connect to docker. Please ensure Docker is installed and running.` Then switch to admin user with su martynas and run
+    if error is `Could not connect to docker. Please ensure Docker is installed and running.` Then switch to admin user with `su martynas` and run
     `sudo chmod /var/run/docker.sock`
 
 ## About Laravel
