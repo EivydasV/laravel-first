@@ -11,7 +11,7 @@
 
 -   `ddev start`
     if error is `Could not connect to docker. Please ensure Docker is installed and running.` Then switch to admin user with `su martynas` and run
-    `sudo chmod /var/run/docker.sock`. When tou done run `exit` command
+    `sudo chmod /var/run/docker.sock`. When you done run `exit` command
 
 ## About Laravel
 
