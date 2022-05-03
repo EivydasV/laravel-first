@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Auth\LoginController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,5 +28,6 @@ Route::get('/post/delete/{post}', [PostController::class, 'destroy'])->name('des
 Route::post('/store', [PostController::class, 'store'])->name('store');
 
 Auth::routes();
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
