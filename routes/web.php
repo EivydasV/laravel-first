@@ -24,3 +24,7 @@ Route::get('/post/delete/{post}', [PostController::class, 'destroy'])->name('des
 
 
 Route::post('/store', [PostController::class, 'store'])->name('store');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
