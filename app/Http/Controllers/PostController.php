@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -46,7 +48,8 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|unique:posts|max:255',
             'content' => 'required',
-            'image' => 'sometimes|image'
+            'image' => 'sometimes|image',
+         
         ]);
 
         if ($request->hasFile('image')) {
@@ -54,7 +57,7 @@ class PostController extends Controller
             $fileName = str_replace('public', '', $path);
             $validated = array_merge($validated, ['image' => $fileName]);
         }
-
+        $validated = array_merge($validated, ['image' => $fileName, 'user_id' => Auth::id()]);
 
         Post::create($validated);
 
@@ -69,6 +72,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+    
         return view('pages.show-post', compact('post'));
     }
 
@@ -80,6 +84,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if(Gate::denies('edit-post', $post)){
+            dd('You can perform this action');
+        }
         return view('pages.edit-post', compact('post'));
     }
 
@@ -92,6 +99,9 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        if(Gate::denies('edit-post', $post)){
+            dd('You can perform this action');
+        }
 
         if ($request->hasFile('image')) {
 
@@ -102,7 +112,7 @@ class PostController extends Controller
         }
         $post->update($request->only(['title', 'content']));
 
-        return redirect()->back();
+        return redirect('/');
     }
 
     /**
@@ -113,6 +123,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if(Gate::denies('delete-post', $post)){
+            dd('You can perform this action');
+        }
         $post->delete();
         return redirect('/');
     }
